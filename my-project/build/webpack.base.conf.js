@@ -25,12 +25,8 @@ module.exports = {
     app: './src/main.js'
   },
   output: {
-    path: config.build.assetsRoot,
-    filename: '[name].js',
-    libraryTarget : "umd",//定义导出库格式
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    path: resolve('..'),
+    filename: '[name].js'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

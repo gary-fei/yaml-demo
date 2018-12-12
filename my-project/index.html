@@ -9,9 +9,12 @@
         href="./static/vs/editor/editor.main.css">
     <script src="./static/vs/loader.js"></script>
     <script src="./static/vs/editor/editor.main.nls.js"></script>
-	  <script src="./static/vs/editor/editor.main.js"></script>
+    <script src="./static/vs/editor/editor.main.js"></script>
+    <script>
+      require.config({ baseUrl: 'static' })
+    </script>
   </head>
-  
+
   <body>
       <!-- <h1>风好大福</h1> -->
     <div id="app"></div>

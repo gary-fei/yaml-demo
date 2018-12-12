@@ -3,14 +3,33 @@
     <h1>{{ msg }}</h1>
     <div
     id="container"
-    style="heihgt:200px;border: 1px"
+    style="height:200px;border: 1px"
     >
     </div>
   </div>
 </template>
 <script>
-require ("staticVs/basic-languages/monaco.contribution")
-require ("staticVs/language/yaml/monaco.contribution")
+const yaml = `
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: nginx-deployment
+    namespace: default
+    labels:
+      app: nginx
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        apps.deployment: nginx
+    template:
+      metadata:
+        labels:
+          apps.deployment: nginx
+      spec:
+        containers:
+        - name: nginx
+          image: nginx:alpine`;
 export default {
   name: 'HelloWorld',
   data () {
@@ -22,27 +41,16 @@ export default {
     changeMsg(){
        this.msg="hello";
     },
+    init() {
+      window.require([
+        'vs/basic-languages/monaco.contribution',
+        'vs/language/yaml/monaco.contribution'
+      ], () => {
+        this.configureEditor();
+      })
+    },
     configureEditor() {
-            const yaml = `apiVersion: apps/v1
-              kind: Deployment
-              metadata:
-                name: nginx-deployment
-                namespace: default
-                labels:
-                  app: nginx
-              spec:
-                replicas: 1
-                selector:
-                  matchLabels:
-                    apps.deployment: nginx
-                template:
-                  metadata:
-                    labels:
-                      apps.deployment: nginx
-                  spec:
-                    containers:
-                    - name: nginx
-                      image: nginx:alpine`;
+
             var editor = monaco.editor.create(document.getElementById('container'), {
               value: yaml,
               language: 'yaml'
@@ -57,11 +65,11 @@ export default {
                 },
               ],
             });
-              
+
     }
   },
   created(){
-   this.changeMsg();
+   this.init();
   }
 
 }
